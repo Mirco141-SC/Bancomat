@@ -82,45 +82,42 @@ class ATM(stored50BillsValue:Int, stored20BillsValue:Int, stored10BillsValue:Int
         }
 
         var tempAmount: Int = amount
-        var needed50Bills: Int
-        var needed20Bills: Int
-        var needed10Bills: Int
+        var needed50Bills: Int = 0
+        var needed20Bills: Int = 0
+        var needed10Bills: Int = 0
 
-        while(tempAmount > 0) {
-            if(tempAmount % 50  == 0) {
-                needed50Bills = calculate50BillsAmount(tempAmount)
+        if(tempAmount / 50  >= 1) {
+            needed50Bills = calculate50BillsAmount(tempAmount)
+            needed50Bills = minOf(needed50Bills, stored50Bills)
 
-                if(stored50Bills >= needed50Bills) {
-                    tempAmount -= 50 * needed50Bills
-
-                    last50BillsGiven = needed50Bills
-                    stored50Bills -= needed50Bills
-                }
-            }
-
-            if(tempAmount % 20 == 0 && tempAmount != 0) {
-                needed20Bills = calculate20BillsAmount(tempAmount)
-
-                if(stored20Bills >= needed20Bills) {
-                    tempAmount -= 10 * needed20Bills
-
-                    last20BillsGiven = needed20Bills
-                    stored20Bills -= needed20Bills
-                }
-            }
-
-            if(tempAmount % 10 == 0 && tempAmount != 0) {
-                needed10Bills = calculate10BillsAmount(tempAmount)
-
-                if(stored10Bills >= needed10Bills) {
-                    tempAmount -= 10 * needed10Bills
-
-                    last10BillsGiven = needed10Bills
-                    stored10Bills -= needed10Bills
-                }
-            }
+            tempAmount -= 50 * needed50Bills
         }
 
-        return true
+        if(tempAmount / 20 >= 1 && tempAmount != 0) {
+            needed20Bills = calculate20BillsAmount(tempAmount)
+            needed20Bills = minOf(needed20Bills, stored20Bills)
+
+            tempAmount -= 20 * needed20Bills
+        }
+
+        if(tempAmount / 10 >= 1 && tempAmount != 0) {
+            needed10Bills = calculate10BillsAmount(tempAmount)
+            needed10Bills = minOf(needed10Bills, stored10Bills)
+
+            tempAmount -= 10 * needed10Bills
+        }
+
+        if(tempAmount == 0) {
+            last50BillsGiven = needed50Bills
+            stored50Bills -= needed50Bills
+
+            last20BillsGiven = needed20Bills
+            stored20Bills -= needed20Bills
+
+            last10BillsGiven = needed10Bills
+            stored10Bills -= needed10Bills
+
+            return true
+        } else return false
     }
 }
