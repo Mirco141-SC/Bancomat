@@ -59,19 +59,19 @@ class ATM(stored50BillsValue:Int, stored20BillsValue:Int, stored10BillsValue:Int
     private fun calculate50BillsAmount(amount: Int):Int {
         require(amount >= 0){"The given amount must be higher or equal to 0"}
 
-        return amount.toInt()/50
+        return amount/50
     }
 
     private fun calculate20BillsAmount(amount: Int):Int {
         require(amount >= 0){"The given amount must be higher or equal to 0"}
 
-        return amount.toInt()/20
+        return amount/20
     }
 
     private fun calculate10BillsAmount(amount: Int):Int {
         require(amount >= 0){"The given amount must be higher or equal to 0"}
 
-        return amount.toInt()/10
+        return amount/10
     }
 
     fun processTakeoutOperation(amount: Int):Boolean {
