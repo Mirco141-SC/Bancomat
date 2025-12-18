@@ -6,7 +6,7 @@ class ATMTest {
 
  /**** Constructor ****/
  @Test
- fun ATM_parametersDoNotMeetRequirements_IllegalArgumentException() {
+ fun constructor_parametersDoNotMeetRequirements_IllegalArgumentException() {
   assertThrows<IllegalArgumentException> {ATM(0, -100, -1)}
  }
 
